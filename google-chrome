@@ -1,0 +1,19 @@
+# chromemium
+1. apt-get install chromium-chromedriver
+
+2. gedit /etc/chromium-browser/default 
+
+default:
+3. CHROMIUM_FLAGS="--user-data-dir -start-maximized"
+
+
+
+# google chrome
+
+1. gedit /usr/bin/google-chrome
+
+2. find below and change
+else
+  #exec -a "$0" "$HERE/chrome"  "$@"
+   exec -a "$0" "$HERE/chrome" "$@" --user-data-dir
+fi

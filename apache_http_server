@@ -1,0 +1,10 @@
+
+
+1. cd /etc/apache2
+
+2. add below command to apache2.conf
+# phpMyAdmin Configuration
+Include /etc/phpmyadmin/apache.conf
+
+3. service apache2 restart
+

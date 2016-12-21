@@ -1,0 +1,10 @@
+sudo update-alternatives --config java
+
+gedit /etc/profile
+
+gedit /etc/environment
+
+export JAVA_HOME=/usr/lib/jvm/java8
+export JRE_HOME=/usr/lib/jvm/java8/jre 
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+export CLASSPATH=$CLASSPATH:.:$JAVA_HOME/jre/lib

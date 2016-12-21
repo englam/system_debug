@@ -1,0 +1,12 @@
+#for python
+
+1. pip install PyOpenGL
+2. pip install PyOpenGL_accelerate
+3. apt-get install freeglut3
+
+
+
+#for c
+sudo apt-get install libgl1-mesa-dev
+sudo apt-get install libglu1-mesa-dev
+sudo apt-get install libglut-dev

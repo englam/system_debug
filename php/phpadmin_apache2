@@ -1,0 +1,10 @@
+https://www.liquidweb.com/kb/how-to-install-and-configure-phpmyadmin-on-ubuntu-14-04/
+
+
+steps:
+1. gedit /etc/apache2/apache2.conf
+2. add command to apache2 
+   "Include /etc/phpmyadmin/apache.conf"
+3. restart apaches
+   service apache2 restart
+4. url : http://127.0.0.1/phpmyadmin

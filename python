@@ -1,0 +1,16 @@
+###############pyenv centos 6.5#####################
+
+1. yum install -y  gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
+2. git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+3. export PATH="$HOME/.pyenv/bin:$PATH"
+4. eval "$(pyenv init -)"
+5. cat << _PYENVCONF_ >> ~/.zshrc
+6. export PATH="$HOME/.pyenv/bin:$PATH"
+7. eval "$(pyenv init -)"
+8. _PYENVCONF_
+
+
+##################python curl######################
+apt-get install libcurl4-gnutls-dev librtmp-dev
+
+pip install pycurl

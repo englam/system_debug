@@ -1,0 +1,28 @@
+
+#enable wifi device
+rfkill unblock all
+
+
+#wifi scan
+
+iwlist wlan0 scan
+
+
+#wifi without password
+iwconfig wlan0 essid "8352_5G"
+dhclient wlan0
+
+#wpa tool
+
+apt-get install wpasupplicant
+
+add a file , file name is  wpa_supplicant.conf
+
+#check connection 
+route -n
+
+wpa_supplicant -Dnl80211 -iwlan0 -c/etc/wpa_supplicant/wpa_supplicant.conf
+
+del /run/wpa_supplicant/wlan0 , first
+
+

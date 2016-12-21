@@ -1,0 +1,4 @@
+1. git clone https://github.com/jurobystricky/Netgear-A6210
+2. cd Netgear-A6210
+3. make
+4. make install

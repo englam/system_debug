@@ -1,0 +1,3 @@
+##########teamviewer installation:###########
+
+apt-get -f install

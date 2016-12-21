@@ -1,0 +1,19 @@
+apt-get install minicom
+apt-get install screen
+
+
+
+####go to rs232 terminal ###
+
+screen /dev/ttyUSB0 115200
+
+
+####leave rs232 terminal ####
+
+1 .  ctrl + a
+2 .  ctrl +z
+
+
+#####check rs232 status ####
+
+dmesg |grep tty

@@ -1,0 +1,15 @@
+#check driver
+lspci -k
+lspci -v |grep Network
+
+
+#firmware check
+ethtool -i enp8s0
+
+#wifi 
+iwconfig
+
+#ip check
+ip link
+ip link set XXXX up
+
