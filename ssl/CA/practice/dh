@@ -1,0 +1,12 @@
+    DH Parameters: (512 bit)
+        prime:
+            00:8b:f9:72:8c:f6:e0:9c:cd:db:83:44:d7:5f:5a:
+            39:cd:0f:5a:6d:86:9e:dd:f4:a8:19:b4:a0:34:de:
+            46:0f:dd:48:4d:27:a2:97:3a:75:fb:35:37:30:56:
+            f6:78:c2:c5:51:e2:73:a9:c2:cf:5e:67:9c:c8:99:
+            57:35:9c:c7:93
+        generator: 5 (0x5)
+-----BEGIN DH PARAMETERS-----
+MEYCQQCL+XKM9uCczduDRNdfWjnND1pthp7d9KgZtKA03kYP3UhNJ6KXOnX7NTcw
+VvZ4wsVR4nOpws9eZ5zImVc1nMeTAgEF
+-----END DH PARAMETERS-----

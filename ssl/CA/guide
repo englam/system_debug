@@ -1,0 +1,81 @@
+----openssl generate key command:----
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout Documents/ssl/practice/test.key -out Documents/ssl/practice/test.crt
+
+req : generate CSR certificate
+-x509 : self certificate
+-nodes : no key protect
+-days : duration
+-newkey rsa: 2048 -> RSA2048
+-keyout : key path
+-out : cer path
+
+
+-------------------------------------------------
+
+------------openssl CA ------------
+demoCA_path = root
+Need to delete demoCA before executing CA.pl.
+
+step 1:
+copy "demoCA" to "/usr/lib/ssl"
+cd /usr/lib/ssl
+
+step 2:
+/usr/lib/ssl/misc/CA.pl -newca --ubuntu directory
+
+**** generate server key ****
+
+setp 3:
+openssl req -new -nodes -keyout server_key.pem -out server_req.pem -days 730 -config ./openssl.cnf
+
+generation : "server_key.pem" and "server_req.pem"
+
+step 4, sign CA:
+openssl ca -config ./openssl.cnf -policy policy_anything -out server_cert.pem -infiles ./server_req.pem
+
+generation : "server_cert.pem"
+
+step 5, (check BEGIN CERTIFICATE and END CERTIFICATE):
+gedit server_cert.pem
+
+step 6:
+cat server_key.pem server_cert.pem > server_keycert.pem
+
+generation : server_keycert.pem
+
+
+**** generate client key ****
+step 7:
+openssl req -new -keyout client_key.pem -out client_req.pem -days 730 -config ./openssl.cnf
+
+generation : "client_key.pem" and "client_req.pem"
+
+step 9 (important):
+1. do to demoCA folder
+2. empty index.txt , because the file had been written before by server certificate.
+
+step 8:
+openssl ca -config ./openssl.cnf -policy policy_anything -out client_cert.pem -infiles ./client_req.pem
+
+generation : client_cert.pem
+
+step 9:
+openssl pkcs12 -export -in client_cert.pem -inkey client_key.pem -out client_cert.p12 -clcerts
+
+generation : client_cert.p12
+
+step 10:
+openssl dhparam -check -text -5 512 -out dh
+
+generation : dh
+
+step 11:
+dd if=/dev/urandom of=random count=2
+
+generation : random
+
+
+
+
+
