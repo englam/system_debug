@@ -1,0 +1,45 @@
+
+###installation####
+1. apt-get update
+2. apt-get install isc-dhcp-server -y
+3. gedit /etc/default/isc-dhcp-server
+   modified "INTERFACES="eth0""
+
+
+#### modified configuration#####
+4. gedit /etc/dhcp/dhcpd.conf 
+
+
+example:
+
+# option definitions common to all supported networks...
+default-lease-time 600;
+max-lease-time 7200;
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+ 
+subnet 192.168.100.0 netmask 255.255.255.0 {  #network
+ range 192.168.100.20 192.168.100.100; # Range
+ option domain-name-servers 192.168.100.5, 8.8.8.8; #Pri DNS , Sec DNS
+ option domain-name "krizna.com"; #Domain name 
+ option routers 192.168.100.1; #Gateway
+ option broadcast-address 192.168.100.255; #Broadcast
+ default-lease-time 600;
+ max-lease-time 7200;
+}
+
+
+
+
+######start run#####
+
+service isc-dhcp-server restart
+
+#check lease #
+/var/lib/dhcp/dhcpd.leases
+
+

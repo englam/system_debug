@@ -1,0 +1,91 @@
+安裝 mySQL 5.6 
+apt-get install mysql-server-5.6
+安裝過程會要求輸入root密碼，要輸入兩次，請自行牢記 
+
+測試安裝結果
+mysql -uroot -p
+進入mySQL Console後執行以下指令
+select version();
+
+以上步驟參考自  Master MySQL Blog of Morgan Tocker
+
+
+安裝FreeRadius 
+
+注意:安裝過程中會需要編輯權限嚴格的檔案，建議以root的身分操作以下指令
+
+apt-get install freeradius freeradius-mysql 
+
+測試安裝結果
+freeradius -v 
+
+
+在mysql console環境中執行以下指令，以便在mysql中建立資料庫，建立freeradius帳號，賦予該帳號權限
+create database radius;
+grant all on radius.* to radius@localhost identified by "abcde12345";
+
+在console中執行以下指令，建立FreeRadius所需要的db schema
+mysql -u root -p radius < /etc/freeradius/sql/mysql/schema.sql 
+mysql -u root -p radius < /etc/freeradius/sql/mysql/nas.sql
+ 
+在mysql console環境中執行以下指令，建立測試帳號(用來登入freeradius)
+use radius;
+INSERT INTO radcheck (UserName, Attribute, Value) VALUES ('soundmachine', 'Password', 'abcde12345');
+
+編輯以下檔案，
+/etc/freeradius/sql.conf。
+    原始檔案備份為/etc/freeradius/sql.conf.soundmachineBak
+    用於讓freeRadius可以登入mysql，使用的login/password為建立radius database
+    時建立的的帳號密碼
+        database = mysql
+        login = radius
+        password = abcde12345
+
+        readclients = yes (uncomment)
+
+/etc/freeradius/sites-enabled/default 
+    上述路徑為link，真實檔案為/etc/freeradius/sites-enabled/default。
+    原始檔案備份為/etc/freeradius/sites-enabled/default.soundmachineBak
+
+        Uncomment sql on authorize{}
+        # See “Authorization Queries” in sql.conf
+        sql
+
+        Uncomment sql on accounting{}
+        # See “Accounting queries” in sql.conf
+        sql
+
+        Uncomment sql on session{}
+        # See “Simultaneous Use Checking Queries” in sql.conf
+        sql
+
+        Uncomment sql on post-auth{}
+        # See “Authentication Logging Queries” in sql.conf
+        sql 
+    
+
+/etc/freeradius/radiusd.conf
+    原始檔案備份為/etc/freeradius/radiusd.conf.soundmachineBak
+        #Uncomment #$INCLUDE sql.conf
+        $INCLUDE sql.conf
+
+完成上述程序後，將freeradius重啟
+/etc/init.d/freeradius restart
+
+執行以下程式碼
+radtest soundmachine abcde12345 localhost 18128 testing123
+
+找尋Access-Accept關鍵字，如果能看到這個字，表示設定完成
+Sending Access-Request of id 40 to 127.0.0.1 port 1812
+        User-Name = "soundmachine"
+        User-Password = "abcde12345"
+        NAS-IP-Address = 127.0.1.1
+        NAS-Port = 18128
+        Message-Authenticator = 0x00000000000000000000000000000000
+rad_recv: Access-Accept packet from host 127.0.0.1 port 1812, id=40, length=20 
+
+
+
+http://127.0.0.1/phpmyadmin/
+admin : root
+password : sqasqa

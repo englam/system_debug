@@ -1,0 +1,30 @@
+
+#Installation
+
+apt-get install -y slapd ldap-utils 
+
+Administration password = 12345678
+
+
+
+#initial configuration
+dpkg-reconfigure slapd
+
+Omit OpenLDAP server configuration? 	No
+DNS domain name: 						englam.dni.tw
+Organization name: 						englam.dni.tw
+Administrator password: 				12345678
+Confirm password: 						12345678
+Database backend to use: 				HDB
+Do you want the database to be removed when slapd is purged? No
+Move old database? 						Yes
+Allow LDAPv2 protocol? 					No
+
+
+# add below commands to /etc/ldap/ldap.conf
+BASE dc=englam,dc=dni,dc=tw
+URI ldap://192.168.1.51
+
+
+#test myself
+ldapsearch -x

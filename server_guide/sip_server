@@ -1,0 +1,122 @@
+*********Installation***************************
+----download path - kamailio
+
+http://kamailio.org/docs/tutorials/5.0.x/kamailio-install-guide-git/
+
+
+----make directory----
+
+mkdir -p /usr/local/src/kamailio-5.0
+cd /usr/local/src/kamailio-5.0
+
+
+----download from git----
+
+git clone --depth 1 --no-single-branch git://git.kamailio.org/kamailio kamailio
+
+cd kamailio
+git checkout -b 5.0 origin/5.0
+
+
+
+----for mysql----
+make cfg
+cd /usr/local/src/kamailio-5.0/kamailio/src
+gedit modules.lst
+add "include_modules= db_mysql" to modules.lst
+
+
+----compile----
+
+apt-get install bison
+apt-get install flex
+apt-get install libmysqlclient-dev
+
+make all
+make install
+
+
+-----binaries and executable script path ----
+/usr/local/sbin
+
+
+
+*********Usage***************************
+
+
+kamailio - Kamailio SIP server
+kamdbctl - script to create and manage the Databases
+kamctl - script to manage and control Kamailio SIP server
+kamcmd - CLI - command line tool to interface with Kamailio SIP server
+
+
+----check environment----
+echo $PATH
+*make sure "/usr/local/sbin" in the path
+
+
+
+----modules----
+/usr/local/lib64/kamailio/modules
+
+
+----documents----
+/usr/local/share/doc/kamailio/
+
+
+-----man page----
+/usr/local/share/man/man5/
+/usr/local/share/man/man8/
+
+
+----configuration----
+/usr/local/etc/kamailio/kamailio.cfg
+
+
+----create mysql----
+1. gedit /usr/local/etc/kamailio/kamctlrc
+*unmakr or add "DBENGINE=MYSQL"
+
+2. /usr/local/sbin/kamdbctl create
+
+*mysql
+*http://127.0.0.1/phpmyadmin/
+*admin : root
+*password : sqasqa
+
+
+
+
+----edit config----
+gedit /usr/local/etc/kamailio/kamailio.cfg
+
+add below commands to kamailio.cfg
+
+#!define WITH_MYSQL
+#!define WITH_AUTH
+#!define WITH_USRLOCDB
+
+
+----initial script----
+1. cd /usr/local/src/kamailio-5.0/kamailio/pkg/kamailio/deb/debian
+2. copy "kamailio.init" to "/etc/init.d/""
+3. modify "kamailio.init" to "kamailio"
+
+4. modify "kamailio"
+DAEMON=/usr/local/sbin/kamailio
+CFGFILE=/usr/local/etc/kamailio/kamailio.cfg
+
+5. copy /usr/local/src/kamailio-5.0/pkg/kamailio/debian/kamailio.default to /etc/default/
+*rename kamailio.default -> kamailio
+6. gedit kamailio
+* unmark RUN_KAMAILIO=yes
+7. mkdir -p /var/run/kamailio
+8. set ownership to /var/run/kamailio
+
+
+/etc/init.d/kamailio start
+
+Reference : 
+http://kamailio.org/docs/tutorials/5.0.x/kamailio-install-guide-git/
+
+

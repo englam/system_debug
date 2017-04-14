@@ -1,0 +1,31 @@
+----installation----
+apt-get install tacacs+
+
+----status----
+ps -ef | grep tac_plus
+
+----command----
+tac
+tac_plue
+tac_pwd
+
+----create log file----
+touch /var/log/tac_plus.acct
+
+
+----check log----
+tail -f /var/log/tac_plus.acct
+
+----set password----
+tac_pwd 12345678
+Password to be encrypted: 12345678
+generated password: 12yJ.Of/NQ.Pk
+
+----start tacacs+ service----
+/etc/init.d/tacacs_plus restart
+
+
+
+
+
+

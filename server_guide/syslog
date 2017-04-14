@@ -1,0 +1,7 @@
+service rsyslog status
+
+service rsyslog start
+
+service rsyslog stop
+
+tail -f /var/log/syslog

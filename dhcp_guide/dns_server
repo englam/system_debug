@@ -1,0 +1,89 @@
+
+
+1. apt-get install bind9
+2. gedit  /etc/bind/named.conf.options
+add below command to named.conf.options
+
+forwarders {
+       8.8.8.8;
+       8.8.4.4;
+       };
+
+3.  service bind9 restart
+
+4. gedit /etc/resolv.conf
+	modify nameserver 192.168.1.200
+
+
+5. test dns server command :  dig www.krizna.com
+6. create domain example command
+	cp /etc/bind/db.local /etc/bind/db.krizna.com
+7. gedit /etc/bind/db.krizna.com
+
+###example name##
+
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@ IN SOA ns.krizna.com. root.ns.krizna.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.krizna.com.
+@       IN      A       192.168.1.200
+@       IN      AAAA    3002::1111
+ns      IN      A       192.168.1.200
+www     IN 	A 	192.168.6.10
+
+###example##
+
+
+
+8. reverse name command :  cp /etc/bind/db.127 /etc/bind/db.192
+9. gedit /etc/bind/db.192
+
+
+###example reverse #####
+
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@ IN SOA ns.krizna.com. root.ns.krizna.com. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@      IN      NS      ns.
+200    IN      PTR     ns.krizna.com.
+10     IN      PTR     www.krizna.com.
+
+
+###example reverse #####
+
+
+10. gedit /etc/bind/named.conf.local
+
+##example##
+
+// Forward zone
+zone "krizna.com" {
+        type master;
+        file "/etc/bind/db.krizna.com";
+};
+//reverse zone
+zone "6.168.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.192";
+};
+
+
+##example##
+
+
+11. test command :  nslookup www.krizna.com
+12. test command :  nslookup 172.27.6.10

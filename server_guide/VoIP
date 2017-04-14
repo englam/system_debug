@@ -1,0 +1,31 @@
+----download----
+https://sourceforge.net/projects/voiphopper/files/
+
+----Lib Installation----
+apt-get install libpcap-dev
+
+----Installation----
+tar xvfz voiphopper-x.xxx
+./configure
+
+make
+
+''' if path wrong
+							# locate if_tr.h
+	check if_tr.h path ,   
+	 						#gedit dhcpclient.h
+	 						change if_tr.h ,  as </usr/include/netinet/if_tr.h>
+	 						ex . #include </usr/include/netinet/if_tr.h>
+'''
+
+make install
+
+
+----usage----
+
+voiphopper -i enp7s0 -z
+
+voiphopper -i enp7s0 -o 00:50:60:03:99:CB
+
+
+

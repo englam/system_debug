@@ -1,0 +1,49 @@
+
+###installation####
+1. apt-get update
+2. apt-get install isc-dhcp-server -y
+3. gedit /etc/default/isc-dhcp-server
+   modified "INTERFACES="enp7s0""
+
+
+#### modified configuration#####
+4. gedit /etc/dhcp/dhcpd.conf 
+
+
+example:
+
+# option definitions common to all supported networks...
+default-lease-time 600;
+max-lease-time 7200;
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+ 
+subnet6 3002::/64
+{
+
+range6 3002::2000 3002::3000;
+
+#option dhcp6.name-servers fec0:0:0:1::1; 
+#option dhcp6.domain-search "domain.example"; 
+#prefix6 2001:db8:0:100:: 2001:db8:0:f00:: /56;
+
+}
+
+
+########add ###########
+
+touch /var/lib/dhcp/dhcpd6.leases
+
+chown dhcpd:dhcpd /var/lib/dhcp/dhcpd6.leases
+sudo dhcpd -6 -f -cf /etc/dhcp/dhcpd6.conf enp7s0
+
+
+######start run#####
+
+service isc-dhcp-server6 restart
+
+

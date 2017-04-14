@@ -1,0 +1,47 @@
+
+
+1. gedit /etc/sysctl.conf
+2. add : 
+		net.ipv6.conf.all.forwarding=1
+3. sysctl -w net.ipv6.conf.all.forwarding=1
+4. apt-get install radvd
+5. gedit  /etc/radvd.conf
+
+6. create a radvd.conf ,   path  /etc/radvd.conf
+
+7. service radvd start
+
+
+
+
+
+
+
+
+
+
+
+
+
+#####configuration ######
+interface enp7s0
+{
+  AdvSendAdvert on;
+  MinRtrAdvInterval 3;
+  MaxRtrAdvInterval 10;
+ 
+  prefix 3002::/64
+  {
+  };
+ 
+  RDNSS 2001:db8:0:1::a 2001:db8:0:1::b
+  {
+    AdvRDNSSLifetime 10;
+  };
+ 
+  DNSSL koo.fi
+  {
+    AdvDNSSLLifetime 10;
+  };
+};
+
