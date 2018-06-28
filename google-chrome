@@ -17,3 +17,10 @@ else
   #exec -a "$0" "$HERE/chrome"  "$@"
    exec -a "$0" "$HERE/chrome" "$@" --user-data-dir
 fi
+
+或是改成下面的指令
+
+exec -a "$0" "$HERE/chrome" "$@" --user-data-dir --no-sandbox
+
+#update
+apt-get upgrade google-chrome-stable
